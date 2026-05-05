@@ -1,314 +1,440 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JC NEXT ACADEMY - กำหนดการ</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --primary-purple: #702A8C;
-            --secondary-color: #f1e6f5;
-        }
-
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Navbar & Footer Styling */
-        .navbar {
-            background-color: var(--primary-purple) !important;
-        }
-        .social-icon {
-            color: white;
-            transition: opacity 0.3s ease;
-        }
-        .social-icon:hover {
-            color: var(--secondary-color);
-            opacity: 0.8;
-        }
-        .footer-link {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .footer-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* Timeline Schedule Styling */
-        .timeline-item {
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 1.5rem;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: -1.5rem;
-            width: 2px;
-            background-color: var(--secondary-color);
-        }
-        .timeline-item:last-child::before {
-            display: none;
-        }
-        .timeline-icon {
-            position: absolute;
-            left: -0.55rem;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--primary-purple);
-            border: 4px solid white;
-            box-shadow: 0 0 0 2px var(--secondary-color);
-        }
-        .time-badge {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: var(--primary-purple);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Login Button */
-        .btn-login {
-            background-color: var(--primary-purple);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-login:hover {
-            background-color: #5b2171;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(112, 42, 140, 0.3);
-        }
-
-        main {
-            flex: 1;
-        }
-    </style>
+  <base target="_top">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <?!= include('css'); ?>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="https://quota.jc.tu.ac.th/images/jc_logo.png" alt="JC Logo" style="width: 40px; height: auto; margin-right: 10px;">
-                <span class="fs-6 fw-bold">JC NEXT ACADEMY</span>
-            </a>
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center" href="<?= url ?>?page=home" target="_top">
+        <img src="https://quota.jc.tu.ac.th/images/jc_logo.png" alt="JC Logo" style="width: 40px; height: auto; margin-right: 10px;">
+        <span class="fs-6 fw-bold">JC NEXT ACADEMY</span>
+      </a>
+      
+      <div class="ms-auto d-flex align-items-center">
+        <div class="cart-icon-btn text-white" onclick="openCartModal()">
+          <i class="bi bi-cart3 fs-5"></i> ตะกร้าคอร์ส
+          <span id="cart-badge" class="cart-badge badge rounded-pill bg-danger" style="display: none;">0</span>
         </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 
-    <main class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow border-0 rounded-4 overflow-hidden">
-                    
-                    <div class="card-header text-center text-white py-4" style="background: linear-gradient(135deg, var(--primary-purple), #9b4dca);">
-                        <h3 class="mb-1 fw-bold"><i class="bi bi-calendar-event me-2"></i>กำหนดการโครงการ</h3>
-                        <p class="mb-0 text-white-50">JC NEXT ACADEMY ประจำปี 2026</p>
-                    </div>
+  <header class="hero-section">
+    <div class="container">
+      <h1 class="display-4 fw-bold mb-3">JC NEXT ACADEMY</h1>
+      <h2 class="lead mb-4">"หลักสูตรระยะสั้น พัฒนาทักษะสื่อสารในยุคดิจิทัล"</h2>
+      <p class="fs-5 mt-3 fw-light">จัดโดย คณะวารสารศาสตร์และสื่อสารมวลชน มหาวิทยาลัยธรรมศาสตร์</p>
+    </div>
+  </header>
 
-                    <div class="card-body p-4 p-md-5">
-                        <h5 class="fw-bold mb-4 text-center" style="color: var(--primary-purple);">ตารางกิจกรรม</h5>
-                        
-                        <div class="timeline mt-4">
-                            <div class="timeline-item">
-                                <div class="timeline-icon"></div>
-                                <span class="time-badge">08:30 - 09:00 น.</span>
-                                <h6 class="fw-bold mb-1">ลงทะเบียนเข้าร่วมงาน</h6>
-                                <p class="text-muted small">รับเอกสารประกอบการอบรมและรับประทานอาหารว่าง (Morning Break)</p>
-                            </div>
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-icon"></div>
-                                <span class="time-badge">09:00 - 12:00 น.</span>
-                                <h6 class="fw-bold mb-1">กิจกรรมบรรยายพิเศษ (ช่วงเช้า)</h6>
-                                <p class="text-muted small">เจาะลึกเทรนด์สื่อสารมวลชนและทักษะดิจิทัลสำหรับยุคใหม่</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-icon" style="background-color: #6c757d; box-shadow: 0 0 0 2px #e9ecef;"></div>
-                                <span class="time-badge" style="background-color: #e9ecef; color: #6c757d;">12:00 - 13:00 น.</span>
-                                <h6 class="fw-bold mb-1">พักรับประทานอาหารกลางวัน</h6>
-                                <p class="text-muted small">Networking Lunch แลกเปลี่ยนความคิดเห็นกับวิทยากร</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-icon"></div>
-                                <span class="time-badge">13:00 - 16:00 น.</span>
-                                <h6 class="fw-bold mb-1">กิจกรรม Workshop (ช่วงบ่าย)</h6>
-                                <p class="text-muted small">แบ่งกลุ่มฝึกปฏิบัติจริง พร้อมรับฟังข้อเสนอแนะและสรุปผลโครงการ</p>
-                            </div>
-                        </div>
-
-                        <hr class="my-5">
-
-                        <div class="text-center">
-                            <h6 class="mb-3 fw-bold">สนใจเข้าร่วมโครงการ?</h6>
-                            <a href="#" id="login-btn" class="btn btn-login btn-lg rounded-pill px-5 py-3 fw-bold">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> เข้าสู่ระบบ / ลงทะเบียน
-                            </a>
-                            <p class="text-muted small mt-3"><i class="bi bi-shield-lock me-1"></i> ปลอดภัยและรองรับการใช้งานผ่านมือถือ</p>
-                        </div>
-
-                    </div>
-                </div>
+  <div class="container mb-2">
+    <div class="info-section">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="info-item">
+            <div class="info-icon"><i class="bi bi-calendar-event"></i></div>
+            <div class="info-text">
+              <h5>ระยะเวลาโครงการ</h5>
+              <p>เดือนพฤษภาคม - สิงหาคม พ.ศ. 2569</p>
             </div>
+          </div>
         </div>
-    </main>
+        <div class="col-md-4">
+          <div class="info-item">
+            <div class="info-icon"><i class="bi bi-geo-alt"></i></div>
+            <div class="info-text">
+              <h5>สถานที่</h5>
+              <p>คณะวารสารศาสตร์และสื่อสารมวลชน<br>มหาวิทยาลัยธรรมศาสตร์ ท่าพระจันทร์</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="info-item">
+            <div class="info-icon"><i class="bi bi-laptop"></i></div>
+            <div class="info-text">
+              <h5>รูปแบบ</h5>
+              <p>การบรรยายและปฏิบัติการ (Lecture & Workshop) ผสมผสานการใช้เครื่องมือจริง</p>
+            </div>
+          </div>
+        </div>
+        <div class="fee-notice">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>ทั้งนี้ ผู้สนใจเข้ารับการอบรมต้องชำระค่าธรรมเนียมการอบรมจำนวนเงิน 2,500.- บาท ต่อ 1 คอร์ส</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <footer class="py-3 mt-auto border-top" style="background-color: var(--primary-purple); color: white;">
-        <div class="container">
-            <div class="row align-items-center text-center text-md-start">
-                
-                <div class="col-md-6 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0">
-                    <img src="https://quota.jc.tu.ac.th/images/jc_logo.png" alt="JC Logo" style="width: 55px; height: auto; background-color: rgba(255,255,255,0.95); border-radius: 12px; padding: 6px;" class="mb-2 mb-md-0 me-md-3 shadow">
+  
+
+  <main class="container my-5">
+    
+    <h3 class="text-center mb-4 fw-bold" style="color: var(--primary-purple);">กำหนดการอบรม</h3>
+    <div class="schedule-table-container">
+      <div class="table-responsive">
+        <table class="table schedule-table  align-middle">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 20%;">วันที่</th>
+              <th scope="col" style="width: 45%; text-align: left;">หัวข้อ</th>
+              <th scope="col" style="width: 25%;">วิทยากร</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>พฤษภาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">การใช้ AI พื้นฐานเพื่อการวางแผนและสร้างสรรค์คอนเทนต์</td>
+              <td>ผศ. ดร.มานา ปัจฉิมนันท์</td>
+            </tr>
+            <tr>
+              <td>พฤษภาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">การวางแผนการสื่อสารเพื่อสร้างความเชื่อมั่นในยุคดิจิทัล</td>
+              <td>อ. ดร.อาทิมา ขำเปลี่ยน</td>
+            </tr>
+            <tr>
+              <td>มิถุนายน 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">การใช้ AI ในงานข่าวและ Visual Verification</td>
+              <td>รศ. ดร.วิไลวรรณ จงวิไลเกษม</td>
+            </tr>
+            <tr>
+              <td>มิถุนายน 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">Gender Lens สำหรับ Content Creator</td>
+              <td>อ. พิมพ์พจี เย็นอุรา</td>
+            </tr>
+            <tr>
+              <td>กรกฎาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">กฎหมายและลิขสิทธิ์ในงานสื่อ</td>
+              <td>ผศ. ดร.คันธิรา ฉายาวงศ์</td>
+            </tr>
+            <tr>
+              <td>กรกฎาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">Data Journalism: ข้อมูลเพื่องานข่าว</td>
+              <td>ผศ. ดร.เอกพล เธียรถาวร</td>
+            </tr>
+            <tr>
+              <td>สิงหาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">Data Visualization สำหรับสื่อสารองค์กร</td>
+              <td>ผศ. ดร.ชวพร ธรรมนิตยกุล</td>
+            </tr>
+            <tr>
+              <td>สิงหาคม 2569</td>
+              <td class="text-start fw-bold" style="color: var(--primary-purple);">การวางแผนผลิตสื่อสำหรับผู้ประกอบการ SMEs</td>
+              <td>อ.ภูเบศ พิรกุลวานิช</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="text-center mb-5 fw-bold " style="color: var(--primary-purple);">คอร์สเรียนที่เปิดลงทะเบียน</h3>
+    
+    <div id="course-container" class="row g-4"></div>
+
+    <div class="container px-0 mb-1 mt-5">
+      <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 20px; background: linear-gradient(135deg, #ffffff 0%, #f8f1ff 100%);">
+        <div class="card-body p-4 p-md-5">
+          <div class="row align-items-center">
+            <div class="col-lg-1 text-center d-none d-lg-block">
+              <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center mx-auto" style="width: 60px; height: 60px;">
+                <i class="bi bi-headset fs-3" style="color: var(--primary-purple);"></i>
+              </div>
+            </div>
+            <div class="col-lg-11 ps-lg-4">
+              <h4 class="fw-bold mb-4" style="color: var(--primary-purple);">ติดต่อสอบถามข้อมูลเพิ่มเติม</h4>
+              <div class="row g-4">
+                <div class="col-sm-6 col-xl-3">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                      <i class="bi bi-person-badge text-primary fs-5"></i>
+                    </div>
                     <div>
-                        <h6 class="mb-1 fw-bold">คณะวารสารศาสตร์และสื่อสารมวลชน</h6>
-                        <p class="mb-1" style="color: var(--secondary-color); font-size: 0.9rem;">มหาวิทยาลัยธรรมศาสตร์</p>
-                        
-                        <div class="d-flex justify-content-center justify-content-md-start mt-2">
-                            <a href="https://www.facebook.com/JCThammasat/" target="_blank" class="social-icon" style="margin-right: 12px; font-size: 1.4rem;" title="Facebook JC Thammasat">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="https://www.youtube.com/jcthammasat" target="_blank" class="social-icon" style="font-size: 1.4rem;" title="YouTube JC Thammasat">
-                                <i class="bi bi-youtube"></i>
-                            </a>
-                        </div>
+                      <small class="text-muted d-block mb-1">ผู้ประสานงาน</small>
+                      <span class="fw-bold">ศิริลักษณ์ ศรีศิริกุล (จูน)</span>
                     </div>
+                  </div>
                 </div>
-
-                <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                    <small style="color: var(--secondary-color); font-size: 0.8rem;">Powered by</small>
-                    <h6 class="mb-2 fw-bold mt-1">
-                        <a href="https://jc.tu.ac.th/th/personnel/staff#committee_214" target="_blank" class="footer-link" style="font-size: 0.95rem;">
-                            งานเทคโนโลยีดิจิทัลและการสื่อสาร
-                        </a>
-                    </h6>
-                    
-                    <div style="font-size: 0.8rem; color: var(--secondary-color); opacity: 0.8; line-height: 1.4;">
-                        Copyright © 2026 <strong>Faculty of Journalism and Mass Communication</strong>,<br>
-                        Thammasat University. All rights reserved.
+                <div class="col-sm-6 col-xl-3">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                      <i class="bi bi-telephone-plus text-primary fs-5"></i>
                     </div>
+                    <div>
+                      <small class="text-muted d-block mb-1">โทรศัพท์</small>
+                      <span class="fw-bold">02-221-6111-20 ต่อ 3903</span>
+                    </div>
+                  </div>
                 </div>
-
+                <div class="col-sm-6 col-xl-3">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                      <i class="bi bi-phone-vibrate text-primary fs-5"></i>
+                    </div>
+                    <div>
+                      <small class="text-muted d-block mb-1">มือถือ (ด่วน)</small>
+                      <a href="tel:0840854874" class="text-decoration-none fw-bold text-dark">084-0854874</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                      <i class="bi bi-envelope-at text-primary fs-5"></i>
+                    </div>
+                    <div>
+                      <small class="text-muted d-block mb-1">อีเมล</small>
+                      <a href="mailto:sirilux@tu.ac.th" class="text-decoration-none fw-bold text-dark">sirilux@tu.ac.th</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </div>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-
-    <script>
-        // 1. ตรวจสอบว่าเป็นระบบ iOS หรือไม่
-        function isIOS() {
-            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        }
-
-        // 2. ตรวจสอบว่าเป็น In-App Browser (Facebook/LINE) หรือไม่
-        function isInAppBrowser() {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            return /FBAN|FBAV|Line/i.test(ua);
-        }
-
-        // 3. กำหนดเป้าหมายลิงก์เมื่อหน้าเว็บโหลด
-        function setButtonLink() {
-            const btn = document.getElementById('login-btn');
-            // 👇 อัปเดตเป้าหมายชี้ไปยัง URL ใหม่ของฝั่ง User
-            const targetUrl = 'https://script.google.com/macros/s/AKfycbzSMGKq10CrLeghvZ3fkctGbnDpqhpqrQXJFfBaHkvX36g0r6G9YlhXK2mmUv9K3kRd/exec'; 
+  <footer class="py-3 mt-5 border-top" style="background-color: var(--primary-purple); color: white;">
+    <div class="container">
+      <div class="row align-items-center text-center text-md-start">
+        
+        <div class="col-md-6 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0">
+          <img src="https://quota.jc.tu.ac.th/images/jc_logo.png" alt="JC Logo" style="width: 55px; height: auto; background-color: rgba(255,255,255,0.95); border-radius: 12px; padding: 6px;" class="mb-2 mb-md-0 me-md-3 shadow">
+          <div>
+            <h6 class="mb-1 fw-bold">คณะวารสารศาสตร์และสื่อสารมวลชน</h6>
+            <p class="mb-1" style="color: var(--secondary-color); font-size: 0.9rem;">มหาวิทยาลัยธรรมศาสตร์</p>
             
-            if (isIOS() && isInAppBrowser()) {
-                btn.href = 'x-safari-' + targetUrl;
-            } else {
-                btn.href = targetUrl;
-            }
-        }
+            <div class="d-flex justify-content-center justify-content-md-start">
+              <a href="https://www.facebook.com/JCThammasat/" target="_blank" class="social-icon" style="margin-right: 12px; font-size: 1.4rem;" title="Facebook JC Thammasat">
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a href="https://www.youtube.com/jcthammasat" target="_blank" class="social-icon" style="font-size: 1.4rem;" title="YouTube JC Thammasat">
+                <i class="bi bi-youtube"></i>
+              </a>
+            </div>
+          </div>
+        </div>
 
-        // 4. ดักจับการคลิกปุ่ม
-        document.getElementById('login-btn').addEventListener('click', function(e) {
-            e.preventDefault(); 
-            const targetUrl = this.href; 
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+          <small style="color: var(--secondary-color); font-size: 0.8rem;">Powered by</small>
+          <h6 class="mb-2 fw-bold mt-1">
+            <a href="https://jc.tu.ac.th/th/personnel/staff#committee_214" target="_blank" class="footer-link" style="font-size: 0.95rem;">
+              งานเทคโนโลยีดิจิทัลและการสื่อสาร
+            </a>
+          </h6>
+          
+          <div style="font-size: 0.8rem; color: var(--secondary-color); opacity: 0.8; line-height: 1.4;">
+            Copyright © 2026 <strong>Faculty of Journalism and Mass Communication</strong>,<br>
+            Thammasat University. All rights reserved.
+          </div>
+        </div>
 
-            Swal.fire({
-                title: 'กำลังนำท่านเข้าสู่ระบบ',
-                html: 'กรุณารอสักครู่...',
-                allowOutsideClick: false, 
-                allowEscapeKey: false,
-                color: '#702A8C',
-                didOpen: () => {
-                    Swal.showLoading(); 
-                }
-            });
+      </div>
+    </div>
+  </footer>
 
-            setTimeout(() => {
-                window.location.href = targetUrl;
-                // สำหรับ iOS Redirect
-                if (isIOS() && isInAppBrowser()) {
-                    setTimeout(() => { Swal.close(); }, 2000);
-                }
-            }, 600);
+  <div class="modal fade" id="cartModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: var(--primary-purple); color: white;">
+          <h5 class="modal-title fw-bold"><i class="bi bi-cart-check-fill me-2"></i>คอร์สเรียนที่เลือก</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="cart-modal-body" style="max-height: 60vh; overflow-y: auto;">
+          </div>
+        <div class="modal-footer d-flex justify-content-between align-items-center bg-light">
+          <div class="cart-total">ยอดชำระ: <span id="cart-total-price">0</span> บาท</div>
+          <div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">เลือกคอร์สเพิ่ม</button>
+            <button type="button" class="btn btn-warning fw-bold px-4" onclick="proceedToCheckout()">ไปหน้าชำระเงิน <i class="bi bi-arrow-right-circle ms-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>
+    const PRICE_PER_COURSE = 2500;
+    // โหลดตะกร้าจาก Session หรือสร้าง Array ว่าง
+    let cart = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    window.onload = function() {
+      renderCourses();
+      updateCartBadge();
+    };
+
+    // // 1. นำข้อมูลคอร์สมาจัดการในฝั่ง JavaScript แทน (เพิ่มฟิลด์ image)
+    const courses = [
+      {
+        id: 1, 
+        title: "การใช้ AI พื้นฐานเพื่อการวางแผนและสร้างสรรค์คอนเทนต์", 
+        speaker: "ผศ. ดร.มานา ปัจฉิมนันท์",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.1.png" // <-- ใส่ลิงก์รูปภาพของคุณตรงนี้
+      },
+      {
+        id: 2, 
+        title: "การวางแผนการสื่อสารเพื่อสร้างความเชื่อมั่นในยุคดิจิทัล", 
+        speaker: "อ. ดร.อาทิมา ขำเปลี่ยน",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.2.png"
+      },
+      {
+        id: 3, 
+        title: "การใช้ AI ในงานข่าวและ Visual Verification", 
+        speaker: "รศ. ดร.วิไลวรรณ จงวิไลเกษม",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.3.png"
+      },
+      {
+        id: 4, 
+        title: "Gender Lens สำหรับ Content Creator", 
+        speaker: "อ. พิมพ์พจี เย็นอุรา",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.4.png"
+      },
+      {
+        id: 5, 
+        title: "กฎหมายและลิขสิทธิ์ในงานสื่อ", 
+        speaker: "ผศ. ดร.คันธิรา ฉายาวงศ์",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.5.png"
+      },
+      {
+        id: 6, 
+        title: "Data Journalism: ข้อมูลเพื่องานข่าว", 
+        speaker: "ผศ. ดร.เอกพล เธียรถาวร",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.6.png"
+      },
+      {
+        id: 7, 
+        title: "Data Visualization สำหรับสื่อสารองค์กร", 
+        speaker: "ผศ. ดร.ชวพร ธรรมนิตยกุล",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.7.png"
+      },
+      {
+        id: 8, 
+        title: "การวางแผนผลิตสื่อสำหรับผู้ประกอบการ SMEs", 
+        speaker: "อ.ภูเบศ พิรกุลวานิช",
+        image: "https://raw.githubusercontent.com/thiti0365/images/main/วิทยากร_1.8.png"
+      }
+    ];
+
+    const scriptUrl = '<?= url ?>'; // URL ของ Web App
+
+    // 2. ฟังก์ชันสร้าง Card คอร์สเรียน
+    function renderCourses() {
+      const container = document.getElementById('course-container');
+      let html = '';
+      
+      courses.forEach(course => {
+        html += `
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="course-card">
+              <img src="${course.image}" class="course-img" alt="Course Image">
+              <div class="course-body">
+                <div class="course-title">${course.title}</div>
+                <div class="speaker-name text-muted small mb-3">โดย ${course.speaker}</div>
+                <button type="button" onclick="addToCart(${course.id})" class="btn btn-register mt-auto"><i class="bi bi-cart-plus me-1"></i> เพิ่มลงตะกร้า</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    function addToCart(courseId) {
+      const course = courses.find(c => c.id === courseId);
+      const isExist = cart.some(item => item.id === courseId);
+      if(isExist) {
+        Swal.fire('คอร์สซ้ำ', 'คุณได้เพิ่มคอร์สนี้ลงในตะกร้าแล้ว', 'info');
+        return;
+      }
+      cart.push(course);
+      sessionStorage.setItem('cartItems', JSON.stringify(cart));
+      updateCartBadge();
+      Swal.fire({ icon: 'success', title: 'เพิ่มลงตะกร้าสำเร็จ!', showConfirmButton: false, timer: 1000 });
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      if(cart.length > 0) {
+        badge.innerText = cart.length;
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    // ฟังก์ชันสร้างหน้าตาของคอร์สในตะกร้า (เพิ่มรูปภาพ และ ชื่อวิทยากร)
+    function renderCartModalContent() {
+      const modalBody = document.getElementById('cart-modal-body');
+      const totalPriceEl = document.getElementById('cart-total-price');
+      
+      if(cart.length === 0) {
+        modalBody.innerHTML = '<div class="text-center text-muted my-4">ตะกร้าของคุณว่างเปล่า<br>กรุณาเลือกคอร์สเรียนที่สนใจ</div>';
+        totalPriceEl.innerText = '0';
+      } else {
+        let html = '';
+        cart.forEach((item, index) => {
+          html += `
+            <div class="cart-item">
+              <img src="${item.image}" class="cart-item-img" alt="Course Image">
+              <div class="cart-item-info">
+                <div class="cart-item-title">${index + 1}. ${item.title}</div>
+                <div class="cart-item-speaker"><i class="bi bi-person-fill text-muted"></i> วิทยากร: ${item.speaker}</div>
+              </div>
+              <div class="cart-item-action">
+                <div class="cart-item-price">2,500 ฿</div>
+                <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.id})"><i class="bi bi-trash"></i> ลบ</button>
+              </div>
+            </div>
+          `;
         });
+        modalBody.innerHTML = html;
+        totalPriceEl.innerText = (cart.length * PRICE_PER_COURSE).toLocaleString();
+      }
+    }
 
-        // 5. แจ้งเตือนคัดลอกลิงก์ถ้าผู้ใช้กลับมาที่หน้านี้อีกครั้ง
-        window.addEventListener('pageshow', function(event) {
-            if (isIOS() && isInAppBrowser()) {
-                const targetUrlToCopy = 'https://jc-media-it.github.io/JC_Conference_2026/';
-                
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'แนะนำให้เปิดผ่าน Safari',
-                    html: `ระบบตรวจพบว่าท่านใช้งานผ่าน Facebook/Line บน iOS ซึ่งอาจทำให้การแนบไฟล์มีปัญหาได้<br><br>
-                           <b>กรุณาคัดลอกลิงก์ด้านล่างไปเปิดใน Safari ครับ</b><br>
-                           <div class="mt-3 p-2 bg-light border rounded text-break text-dark" style="font-size: 0.9rem;">
-                             ${targetUrlToCopy}
-                           </div>`,
-                    showCancelButton: true,
-                    confirmButtonColor: '#702A8C',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: '<i class="fa-solid fa-copy me-1"></i> คัดลอกลิงก์',
-                    cancelButtonText: 'ใช้งานต่อ',
-                    allowOutsideClick: false
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        navigator.clipboard.writeText(targetUrlToCopy).then(() => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'คัดลอกสำเร็จ!',
-                                text: 'กรุณาวางลิงก์ใน Safari เพื่อดำเนินการต่อครับ',
-                                confirmButtonColor: '#702A8C'
-                            });
-                        });
-                    }
-                });
-            } else {
-                Swal.close();
-            }
-        });
+    // [แก้ไขใหม่] ฟังก์ชันนี้เอาไว้โชว์ Modal อย่างเดียว ป้องกันหน้าจอมืด
+    function openCartModal() {
+      renderCartModalContent(); // อัปเดตข้อมูลให้ล่าสุดก่อน
+      
+      // ใช้ getOrCreateInstance แทน new Modal เพื่อไม่ให้เกิดการสร้างพื้นหลังซ้อน
+      const cartModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('cartModal'));
+      cartModal.show();
+    }
 
-        document.addEventListener("visibilitychange", function() {
-            if (!document.hidden) { Swal.close(); }
-        });
+    function removeFromCart(courseId) {
+      cart = cart.filter(item => item.id !== courseId);
+      sessionStorage.setItem('cartItems', JSON.stringify(cart));
+      updateCartBadge();
+      
+      // อัปเดตแค่เนื้อหาใน Modal ที่กำลังเปิดอยู่ (ไม่ไปเรียก openCartModal() ซ้ำแล้ว)
+      renderCartModalContent(); 
+    }
 
-        // รันฟังก์ชันเตรียมลิงก์ทันทีที่ไฟล์โหลด
-        setButtonLink();
-    </script>
+    function proceedToCheckout() {
+      if(cart.length === 0) {
+        Swal.fire('ตะกร้าว่างเปล่า', 'กรุณาเลือกคอร์สเรียนก่อนชำระเงิน', 'warning');
+        return;
+      }
+      Swal.fire({
+        title: 'กำลังโหลด...',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+      });
+      setTimeout(() => {
+        window.top.location.href = "<?= url ?>?page=form";
+      }, 800);
+    }
+  </script>
+
 </body>
 </html>
