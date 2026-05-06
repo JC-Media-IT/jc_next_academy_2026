@@ -75,22 +75,22 @@
       border: 2px solid var(--accent-yellow);
     }
 
-    /* --- อัปเดตสไตล์สำหรับตารางกำหนดการ (มีเส้นแบ่งคอลัมน์ & หัวตารางสีม่วง) --- */
+    /* --- อัปเดตสไตล์สำหรับตารางกำหนดการ --- */
     .schedule-table-container {
       background-color: white;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-      overflow: hidden; /* ทำให้มุมตารางโค้งมนตาม container */
+      overflow: hidden; 
       margin-bottom: 50px;
       border: 1px solid rgba(121, 74, 141, 0.2);
     }
     
     .schedule-table {
       margin-bottom: 0;
-      border-collapse: collapse; /* บังคับให้เส้นขอบติดกัน */
+      border-collapse: collapse; 
+      width: 100%;
     }
     
-    /* ตกแต่งแถวแรก (หัวข้อ) ให้เป็นสีม่วงธีมคณะ */
     .schedule-table thead th {
       background-color: var(--primary-purple) !important;
       color: white !important;
@@ -100,25 +100,24 @@
       font-weight: 600;
       padding: 15px;
       white-space: nowrap;
-      border-right: 1px solid rgba(255, 255, 255, 0.3); /* เส้นแบ่งคอลัมน์ในหัวตารางสีขาวจางๆ */
+      border-right: 1px solid rgba(255, 255, 255, 0.3); 
       border-bottom: none;
     }
     
     .schedule-table th:last-child {
-      border-right: none; /* คอลัมน์สุดท้ายไม่ต้องมีเส้นขอบขวา */
+      border-right: none; 
     }
     
-    /* ตกแต่งเนื้อหาในตาราง พร้อมตีเส้นแบ่งคอลัมน์ */
     .schedule-table td {
       vertical-align: middle;
       padding: 12px 15px;
       color: #444;
-      border-right: 1px solid rgba(121, 74, 141, 0.15); /* เส้นแบ่งคอลัมน์เป็นสีม่วงอ่อนๆ */
-      border-bottom: 1px solid rgba(121, 74, 141, 0.15); /* เส้นแบ่งบรรทัดเป็นสีม่วงอ่อนๆ */
+      border-right: 1px solid rgba(121, 74, 141, 0.15); 
+      border-bottom: 1px solid rgba(121, 74, 141, 0.15); 
     }
     
     .schedule-table td:last-child {
-      border-right: none; /* คอลัมน์สุดท้ายไม่ต้องมีเส้นขอบขวา */
+      border-right: none; 
     }
     
     .schedule-table tbody tr {
@@ -126,9 +125,8 @@
     }
     
     .schedule-table tbody tr:hover {
-      background-color: var(--secondary-color); /* เปลี่ยนสีเมื่อนำเมาส์ไปชี้ */
+      background-color: var(--secondary-color); 
     }
-
 
     /* กล่องติดต่อเรา */
     .contact-box {
@@ -155,7 +153,6 @@
       color: var(--primary-purple);
       margin-right: 8px;
     }
-    /* ========================================= */
 
     /* กล่องแจ้งเตือน iOS */
     .ios-warning-box {
@@ -224,25 +221,56 @@
       transform: scale(1.1);
     }
 
-    /* ทำให้ตารางดูดีบนมือถือ */
+    /* =========================================
+       🔥 แก้ไข: ทำให้ตารางดูดีบนมือถือ (Responsive Card View) 
+       ========================================= */
     @media (max-width: 768px) {
-      .schedule-table td {
+      /* 1. ซ่อนหัวตาราง เพราะเราจะแสดงแบบเรียงลงมาแทน */
+      .schedule-table thead {
+        display: none; 
+      }
+      /* 2. เปลี่ยนทุกอย่างในตารางให้เป็น Block */
+      .schedule-table, .schedule-table tbody, .schedule-table tr, .schedule-table td {
         display: block;
         width: 100%;
-        text-align: left !important;
       }
-      .schedule-date {
-        text-align: left !important;
-        padding-top: 0 !important;
-        border-bottom: 1px solid #e9ecef;
+      /* 3. คั่นแต่ละรายวิชาด้วยเส้นหนาสีม่วงอ่อน */
+      .schedule-table tr {
+        border-bottom: 6px solid var(--secondary-color);
       }
-      .schedule-table tr:last-child .schedule-date {
+      .schedule-table tr:last-child {
         border-bottom: none;
       }
-      .schedule-table td:first-child {
-        border-bottom: none;
-        padding-bottom: 0;
-        color: #555;
+      /* 4. ปรับระยะห่างของข้อมูลด้านใน */
+      .schedule-table td {
+        text-align: left !important;
+        border: none !important;
+        padding: 10px 15px;
+      }
+      /* แถวที่ 1: วันที่ */
+      .schedule-table td:nth-child(1) {
+        font-weight: bold;
+        color: var(--primary-purple);
+        background-color: #faf8fb; /* ไฮไลท์พื้นหลังวันที่นิดนึง */
+        padding-top: 15px;
+      }
+      /* แถวที่ 2: หัวข้อ */
+      .schedule-table td:nth-child(2) {
+        padding-bottom: 5px;
+        font-size: 1.1rem;
+      }
+      /* แถวที่ 3: วิทยากร */
+      .schedule-table td:nth-child(3) {
+        padding-top: 0;
+        padding-bottom: 15px;
+        font-size: 0.95rem;
+        color: #666;
+      }
+      /* เติมคำว่าวิทยากรนำหน้าอัตโนมัติ บนมือถือ */
+      .schedule-table td:nth-child(3)::before {
+        content: "👤 วิทยากร: ";
+        font-weight: bold;
+        color: #444;
       }
     }
   </style>
@@ -277,16 +305,16 @@
             </div>
           </div>
 
-          <div class="container my-5">
+          <div class="container my-5 px-0 px-md-3">
           <h3 class="text-center mb-4 fw-bold" style="color: var(--primary-purple);">กำหนดการอบรม</h3>
           <div class="schedule-table-container">
             <div class="table-responsive">
-              <table class="table schedule-table  align-middle">
+              <table class="table schedule-table align-middle">
                 <thead>
                   <tr>
-                    <th scope="col" style="width: 20%;">วันที่</th>
-                    <th scope="col" style="width: 45%; text-align: left;">หัวข้อ</th>
-                    <th scope="col" style="width: 25%;">วิทยากร</th>
+                    <th scope="col" style="width: 20%; text-align: left;">วันที่</th>
+                    <th scope="col" style="width: 50%; text-align: left;">หัวข้อ</th>
+                    <th scope="col" style="width: 30%; text-align: left;">วิทยากร</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -330,8 +358,6 @@
                     <td class="text-start fw-bold" style="color: var(--primary-purple);">Data Journalism: ข้อมูลเพื่องานข่าว</td>
                     <td>ผศ. ดร.เอกพล เธียรถาวร</td>
                   </tr>
-                  
-                  
                 </tbody>
               </table>
             </div>
@@ -351,11 +377,11 @@
           </div>
 
         </div>
-        <div class="ios-warning-box">
+        <div class="ios-warning-box" id="ios-warning" style="display: none;">
           <i class="bi bi-apple"></i>
           <div>
             <strong>คำแนะนำสำหรับผู้ใช้งาน iOS (iPhone/iPad):</strong><br>
-            หากท่านเปิดลิงก์นี้ผ่านแอปพลิเคชัน <b>Facebook</b> ระบบอาจทำงานไม่สมบูรณ์ แนะนำให้ท่านคัดลอกลิงก์ : http://jc-media-it.github.io/jc_next_academy_2026/ เพื่อนำไปเปิดในแอปพลิเคชัน <b>Safari</b> แทน 
+            หากท่านเปิดลิงก์นี้ผ่านแอปพลิเคชัน <b>Facebook</b> ระบบอาจทำงานไม่สมบูรณ์ แนะนำให้ท่านคัดลอกลิงก์ : <span id="copyUrlText" class="text-primary text-break">http://jc-media-it.github.io/jc_next_academy_2026/</span> เพื่อนำไปเปิดในแอปพลิเคชัน <b>Safari</b> แทน 
           </div>
         </div>
 
@@ -417,82 +443,55 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <script>
-    // 1. ตรวจสอบว่าเป็นระบบ iOS หรือไม่
+    const targetAppUrl = 'https://script.google.com/macros/s/AKfycby6HV0Z409MYapDj_P6m9agoUT28I08qS9v7cvKCgStZKqvygxuyn6fim9t30WJ6EIMVw/exec'; 
+    const targetUrlToCopy = 'https://jc-media-it.github.io/jc_next_academy_2026/';
+
     function isIOS() {
         return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
-    // 2. ตรวจสอบว่าเป็น In-App Browser (Facebook/LINE) หรือไม่
     function isInAppBrowser() {
         const ua = navigator.userAgent || navigator.vendor || window.opera;
         return /FBAN|FBAV|Line/i.test(ua);
     }
 
+    const isProblematicIOS = isIOS() && isInAppBrowser();
+
     function setButtonLink() {
         const btn = document.getElementById('login-btn');
-        
-        // ลิงก์ Google Apps Script ของคุณ
-        const targetUrl = 'https://script.google.com/macros/s/AKfycby6HV0Z409MYapDj_P6m9agoUT28I08qS9v7cvKCgStZKqvygxuyn6fim9t30WJ6EIMVw/exec'; 
-        
-        // หากเปิดจาก Line/Facebook บน iPhone ให้ใช้ทริคบังคับเปิดใน Safari
-        if (isIOS() && isInAppBrowser()) {
-            btn.href = 'x-safari-' + targetUrl;
+        if (isProblematicIOS) {
+            btn.href = 'x-safari-' + targetAppUrl;
+            document.getElementById('ios-warning').style.display = 'flex';
         } else {
-            btn.href = targetUrl;
+            btn.href = targetAppUrl;
         }
     }
 
-    // เมื่อกดปุ่มเข้าสู่ระบบ
     document.getElementById('login-btn').addEventListener('click', function(e) {
         e.preventDefault(); 
-        
-        const targetUrl = this.href; 
+        const redirectUrl = this.href; 
 
-        // แสดง Loading อนิเมชัน
         Swal.fire({
             title: 'กำลังนำท่านเข้าสู่ระบบ',
             html: 'กรุณารอสักครู่...',
             allowOutsideClick: false, 
             allowEscapeKey: false,
-            color: '#743d88', // คุมโทนสีม่วง
+            color: '#743d88', 
             didOpen: () => {
                 Swal.showLoading(); 
             }
         });
 
-        // หน่วงเวลาเล็กน้อยให้เห็น Loading แล้วค่อย Redirect
         setTimeout(() => {
-            window.location.href = targetUrl;
-            
-            // ป้องกันปัญหาจอค้างบน Facebook iOS:
-            // ถ้าเป็นการเด้งไป Safari หน้าเว็บเดิมจะไม่ถูกปิด ให้ตั้งเวลาปิด Loading อัตโนมัติ
-            if (isSafariRedirect) {
-                setTimeout(() => {
-                    Swal.close();
-                }, 2000); // สั่งปิดหลังผ่านไป 2 วินาที
+            window.location.href = redirectUrl;
+            if (isProblematicIOS) {
+                setTimeout(() => { Swal.close(); }, 2000); 
             }
         }, 600);
     });
 
-    // ดักจับการกดย้อนกลับ (Back Button)
     window.addEventListener('pageshow', function(event) {
-        Swal.close(); 
-    });
-
-    // ดักจับการสลับแอป (Page Visibility) - ถ้าผู้ใช้สลับกลับมาที่แอป Facebook ให้ปิด Loading
-    document.addEventListener("visibilitychange", function() {
-        if (!document.hidden) {
-            Swal.close();
-        }
-    });
-
-    // ซ่อน Loading เวลากดปุ่ม Back กลับมาหน้านี้ (เผื่อผู้ใช้กดย้อนกลับ)
-    window.addEventListener('pageshow', function(event) {
-      // ตรวจสอบว่าเป็น iOS และเปิดผ่าน Facebook/LINE หรือไม่
-        if (isIOS() && isInAppBrowser()) {
-            
-            const targetUrlToCopy = 'https://jc-media-it.github.io/JC_Conference_2026/';
-            
+        if (isProblematicIOS) {
             Swal.fire({
                 icon: 'warning',
                 title: 'แนะนำให้เปิดผ่าน Safari',
@@ -502,17 +501,14 @@
                          ${targetUrlToCopy}
                        </div>`,
                 showCancelButton: true,
-                confirmButtonColor: '#794a8d', // สีม่วงของคณะ
+                confirmButtonColor: '#794a8d', 
                 cancelButtonColor: '#6c757d',
                 confirmButtonText: '<i class="bi bi-files me-1"></i> คัดลอกลิงก์',
                 cancelButtonText: 'เข้าใจแล้ว (ใช้งานต่อ)',
-                allowOutsideClick: false // บังคับให้ต้องกดปุ่มใดปุ่มหนึ่ง
+                allowOutsideClick: false 
             }).then((result) => {
-                // ถ้า User กดปุ่ม "คัดลอกลิงก์"
                 if (result.isConfirmed) {
-                    // ใช้คำสั่ง Copy ลง Clipboard
                     navigator.clipboard.writeText(targetUrlToCopy).then(() => {
-                        // แสดง Pop-up ยืนยันว่าคัดลอกสำเร็จ
                         Swal.fire({
                             icon: 'success',
                             title: 'คัดลอกลิงก์สำเร็จ!',
@@ -520,18 +516,21 @@
                             confirmButtonColor: '#794a8d'
                         });
                     }).catch(err => {
-                        // เผื่อกรณีเบราว์เซอร์ไม่อนุญาตให้ใช้ clipboard API
                         Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถคัดลอกลิงก์ได้อัตโนมัติ กรุณาเลือกคลุมดำและคัดลอกด้วยตนเอง', 'error');
                     });
                 }
             });
-        }
-        else {
-          Swal.close();
-          } 
+        } else {
+            Swal.close();
+        } 
     });
 
-    // เรียกใช้งานฟังก์ชันเซ็ตลิงก์เมื่อโหลดหน้าเว็บ
+    document.addEventListener("visibilitychange", function() {
+        if (!document.hidden) {
+            Swal.close();
+        }
+    });
+
     setButtonLink();
   </script>
 </body>
