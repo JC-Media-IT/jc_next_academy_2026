@@ -377,7 +377,7 @@
           </div>
 
         </div>
-        <div class="ios-warning-box" id="ios-warning" style="display: none;">
+        <div class="ios-warning-box" id="ios-warning">
           <i class="bi bi-apple"></i>
           <div>
             <strong>คำแนะนำสำหรับผู้ใช้งาน iOS (iPhone/iPad):</strong><br>
@@ -461,7 +461,7 @@
         const btn = document.getElementById('login-btn');
         if (isProblematicIOS) {
             btn.href = 'x-safari-' + targetAppUrl;
-            document.getElementById('ios-warning').style.display = 'flex';
+            // document.getElementById('ios-warning').style.display = 'flex';
         } else {
             btn.href = targetAppUrl;
         }
